@@ -32,11 +32,20 @@ router.post("/login", async (req, res) => {
   }
 });
 
-router.get('/userdata:id?', async (req, res) => {
+router.get('/userdata/:id?', async (req, res) => {
   if(!req.params.id) return res.status(400).send("Incomplete Data")
   const user = await User.find({_id:req.params.id})
   if(!user) return res.status(400).send("User not found")
-  res.status(200).send(user)
+  userSend = {
+    workSpacesId: user[0].workSpacesId, 
+    id: user[0]._id,  
+    assignedTaskId:user[0].assignedTaskId,
+    name:user[0].name,
+    userName:user[0].userName,
+    email:user[0].email,
+    status:user[0].status,
+  }
+  res.status(200).send(userSend) 
 })
 
 module.exports = router;
