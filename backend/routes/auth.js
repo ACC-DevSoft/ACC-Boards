@@ -32,5 +32,11 @@ router.post("/login", async (req, res) => {
   }
 });
 
+router.get('/userdata:id?', async (req, res) => {
+  if(!req.params.id) return res.status(400).send("Incomplete Data")
+  const user = await User.find({_id:req.params.id})
+  if(!user) return res.status(400).send("User not found")
+  res.status(200).send(user)
+})
 
 module.exports = router;

@@ -43,6 +43,7 @@ export class AuthService {
   loggedIn(){
     return !!localStorage.getItem('token');
   }
+  
   getCurrent(){
     let currentUser = localStorage.getItem('current');
     return currentUser;
