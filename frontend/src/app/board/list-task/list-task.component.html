@@ -39,15 +39,14 @@
                 task.name
               }}</mat-card-title>
               <mat-form-field *ngIf="edition == true && taskId == task._id">
-                <input [(ngModel)]="taskData.name" matInput required />
+                <input type="text" class="form-control" [(ngModel)]="taskData.name" matInput required />
               </mat-form-field>
             </mat-card-header>
             <figure class="img-container">
               <img
-                class="my-4"
+                class="my-4 imgTask img-fluid"
                 mat-card-lg-avatar
-                src="{{ task._id | getImg: 'tasks' }}"
-                alt="{{ task.name }}"
+                [src]="readerImg || (task._id | getImg: 'tasks')"
               />
             </figure>
             <div
@@ -70,7 +69,7 @@
             <mat-card-content>
               <p *ngIf="edition == false">{{ task.description }}</p>
               <mat-form-field *ngIf="edition == true && taskId == task._id">
-                <input [(ngModel)]="taskData.description" matInput required />
+                <input type="text" class="form-control" [(ngModel)]="taskData.description" matInput required />
               </mat-form-field>
               <div class="d-flex justify-content-end my-2">
                 <button
@@ -144,12 +143,12 @@
                 task.name
               }}</mat-card-title>
               <mat-form-field *ngIf="edition == true && taskId == task._id">
-                <input [(ngModel)]="taskData.name" matInput required />
+                <input type="text" class="form-control" [(ngModel)]="taskData.name" matInput required />
               </mat-form-field>
             </mat-card-header>
             <figure class="img-container">
               <img
-                class="my-4"
+                class="my-4 imgTask img-fluid"
                 mat-card-lg-avatar
                 src="{{ task._id | getImg: 'tasks' }}"
                 alt="{{ task.name }}"
@@ -174,7 +173,7 @@
             <mat-card-content>
               <p *ngIf="edition == false">{{ task.description }}</p>
               <mat-form-field *ngIf="edition == true && taskId == task._id">
-                <input [(ngModel)]="taskData.description" matInput required />
+                <input type="text" class="form-control" [(ngModel)]="taskData.description" matInput required />
               </mat-form-field>
               <div class="d-flex justify-content-end my-2">
                 <button
@@ -254,12 +253,12 @@
                 task.name
               }}</mat-card-title>
               <mat-form-field *ngIf="edition == true && taskId == task._id">
-                <input [(ngModel)]="taskData.name" matInput required />
+                <input type="text" class="form-control" [(ngModel)]="taskData.name" matInput required />
               </mat-form-field>
             </mat-card-header>
             <figure class="img-container">
               <img
-                class="my-4"
+                class="my-4 imgTask img-fluid"
                 mat-card-lg-avatar
                 src="{{ task._id | getImg: 'tasks' }}"
                 alt="{{ task.name }}"
@@ -270,7 +269,7 @@
               *ngIf="edition == true && taskId == task._id"
             >
               <div>
-                <input type="file" (change)="uploadImg($event)" />
+                <input type="file" (change)="uploadImg($event)"/>
               </div>
               <mat-card-actions class="mb-4">
                 <button mat-raised-button color="primary" (click)="changeImg()">
@@ -284,7 +283,7 @@
             <mat-card-content>
               <p *ngIf="edition == false">{{ task.description }}</p>
               <mat-form-field *ngIf="edition == true && taskId == task._id">
-                <input [(ngModel)]="taskData.description" matInput required />
+                <input type="text" class="form-control" [(ngModel)]="taskData.description" matInput required />
               </mat-form-field>
               <div class="d-flex justify-content-end my-2">
                 <button

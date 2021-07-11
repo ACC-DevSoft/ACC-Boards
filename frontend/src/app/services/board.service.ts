@@ -30,9 +30,6 @@ export class BoardService {
 
   }
 
-  getImg(url: string) {
-    return this.http.get(url);
-  }
 
   listTask(boardId: any) {
     return this.http.get<any>(this.env + 'board/getTasks/' + boardId)
@@ -42,6 +39,9 @@ export class BoardService {
     return this.http.put<any>(this.env + 'board/updateTask/'+ body._id, body)
   }
 
+  showImg(collection: string,id:any) {
+    return this.http.get<any>(`${this.env}uploads/${collection}/${id}`,{responseType: 'blob' as 'json'})
+  }
   updateImg(collection: string,id:any,image: any) {
     return this.http.put<any>(`${this.env}uploads/${collection}/${id}`, image)
   }

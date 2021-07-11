@@ -19,18 +19,19 @@ export class ListTaskComponent implements OnInit {
   selectedFile: any;
   flagImg: boolean;
   taskImg: string;
+  readerImg: any;
 
   constructor(public board: BoardService, private router: Router, private activateRoute: ActivatedRoute) {
 
     this.id = this.activateRoute.snapshot.params.id;
     this.taskId = '';
     this.taskImg = '';
-    this.loadTask();
     this.taskData = {}
     this.edition = false;
     this.flagImg = false;
     this.selectedFile = null;
 
+    this.loadTask();
   }
 
   ngOnInit(): void { }
@@ -70,6 +71,11 @@ export class ListTaskComponent implements OnInit {
     const { name, description, _id } = task;
     this.taskId = _id;
     this.edition = true;
+    if( this.edition){
+      this.currentImg(_id);
+    }else{
+      this.readerImg = null
+    }
     this.taskData = { _id, name, description }
 
     console.log(task);
@@ -87,9 +93,26 @@ export class ListTaskComponent implements OnInit {
     )
   }
 
+  currentImg(id: string) {
+    this.board.showImg('tasks', id).subscribe(
+      res => {
+        console.log(res);
+        const reader = new FileReader();
+        reader.readAsDataURL(res); // convierte el blob a base64 y llama a onload
+        reader.onload = () => this.readerImg = reader.result; // URL de datos
+      }
+    )
+  }
   uploadImg(event: any) {
     console.log(event);
-    this.selectedFile = <File>event.target.files[0];
+    if (event.target.files && event.target.files[0]) {
+
+      this.selectedFile = <File>event.target.files[0];
+      const reader = new FileReader();
+      reader.onload = (e) => this.readerImg = reader.result;
+      reader.readAsDataURL(this.selectedFile);
+    }
+
     this.flagImg = true;
 
   }
