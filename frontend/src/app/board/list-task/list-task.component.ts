@@ -21,6 +21,8 @@ export class ListTaskComponent implements OnInit {
   taskImg: string;
   readerImg: any;
 
+
+
   constructor(public board: BoardService, private router: Router, private activateRoute: ActivatedRoute) {
 
     this.id = this.activateRoute.snapshot.params.id;
@@ -41,13 +43,6 @@ export class ListTaskComponent implements OnInit {
       (res: any) => {
         this.tasks = res.tasks;
       });
-
-    // this.board.getImg(`http://localhost:3025/api/uploads/tasks/${this.taskId}`).subscribe(
-    //   (res: any) => {
-    //     this.taskImg = res;
-    //     console.log('Imagen', this.taskImg);
-
-    //   });
   }
 
   changeStatus(task: any, status: string) {
@@ -67,18 +62,24 @@ export class ListTaskComponent implements OnInit {
     this.router.navigate(['/addTask', this.id]);
   }
 
-  editTask(task: any) {
+  editTask(task: any, taskId: any) {
     const { name, description, _id } = task;
-    this.taskId = _id;
-    this.edition = true;
-    if( this.edition){
+
+    if (taskId == _id) {
+      this.edition = true;
+    } else {
+      this.edition = false;
+    }
+
+    if (this.edition && task._id == taskId) {
       this.currentImg(_id);
-    }else{
+    } else {
       this.readerImg = null
     }
+
     this.taskData = { _id, name, description }
 
-    console.log(task);
+    this.taskId = _id;
 
   }
 
@@ -87,10 +88,15 @@ export class ListTaskComponent implements OnInit {
     this.board.updateTask(this.taskData).subscribe(
       res => {
         console.log(res);
+        this.changeImg();
         this.loadTask();
 
       }
     )
+  }
+
+  cancelChanges() {
+    this.edition = false
   }
 
   currentImg(id: string) {
@@ -150,6 +156,9 @@ export class ListTaskComponent implements OnInit {
 
   }
 
+  deleteImg() {
+    this.readerImg = '/assets/imgs/no-image.jpg';
+  }
 
 
   drop(e: any) {

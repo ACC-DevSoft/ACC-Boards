@@ -39,58 +39,83 @@
                 task.name
               }}</mat-card-title>
               <mat-form-field *ngIf="edition == true && taskId == task._id">
-                <input type="text" class="form-control" [(ngModel)]="taskData.name" matInput required />
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="taskData.name"
+                  matInput
+                  required
+                />
               </mat-form-field>
             </mat-card-header>
+            <div class="d-flex justify-content-end">
+              <div class="w-50" *ngIf="edition == true && taskId == task._id">
+                <button
+                  class="mx-3"
+                  mat-raised-button
+                  color="primary"
+                  (click)="saveChanges()"
+                >
+                  Guardar
+                </button>
+                <button
+                  mat-raised-button
+                  color="primary"
+                  (click)="cancelChanges()"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
             <figure class="img-container">
               <img
                 class="my-4 imgTask img-fluid"
                 mat-card-lg-avatar
-                [src]="readerImg || (task._id | getImg: 'tasks')"
+                [src]="
+                  (task._id == taskId && readerImg) ||
+                  (task._id | getImg: 'tasks')
+                "
+                (click)="edition && imgInput.click()"
               />
+              <input
+                class="d-none"
+                type="file"
+                (change)="uploadImg($event)"
+                #imgInput
+              />
+              <button
+                *ngIf="edition == true && taskId == task._id"
+                class="delImg"
+                mat-raised-button
+                color="warn"
+                (click)="deleteImg()"
+              >
+                X
+              </button>
             </figure>
-            <div
-              class="uploads my-4 d-flex justify-content-center"
-              *ngIf="edition == true && taskId == task._id"
-            >
-              <div>
-                <input type="file" (change)="uploadImg($event)" />
-              </div>
-              <mat-card-actions class="mb-4">
-                <button mat-raised-button color="primary" (click)="changeImg()">
-                  Change
-                </button>
-                <button mat-raised-button color="warn" (click)="changeImg()">
-                  X
-                </button>
-              </mat-card-actions>
-            </div>
-
             <mat-card-content>
               <p *ngIf="edition == false">{{ task.description }}</p>
               <mat-form-field *ngIf="edition == true && taskId == task._id">
-                <input type="text" class="form-control" [(ngModel)]="taskData.description" matInput required />
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="taskData.description"
+                  matInput
+                  required
+                />
               </mat-form-field>
               <div class="d-flex justify-content-end my-2">
                 <button
                   mat-mini-fab
                   color="primary"
-                  aria-label="Example icon button with a plus one icon"
-                  *ngIf="edition == false"
+                  aria-label="edit icon"
+                  *ngIf="edition ==false"
                 >
-                  <mat-icon (click)="editTask(task)">edit</mat-icon>
-                </button>
-
-                <button
-                  mat-raised-button
-                  color="primary"
-                  (click)="saveChanges()"
-                  *ngIf="edition == true && taskId == task._id"
-                >
-                  Guardar
+                  <mat-icon (click)="editTask(task, taskId)">edit</mat-icon>
                 </button>
               </div>
             </mat-card-content>
+
             <mat-card-actions class="mb-4">
               <button
                 mat-raised-button
@@ -143,55 +168,79 @@
                 task.name
               }}</mat-card-title>
               <mat-form-field *ngIf="edition == true && taskId == task._id">
-                <input type="text" class="form-control" [(ngModel)]="taskData.name" matInput required />
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="taskData.name"
+                  matInput
+                  required
+                />
               </mat-form-field>
             </mat-card-header>
+            <div class="d-flex justify-content-end">
+              <div class="w-50" *ngIf="edition == true && taskId == task._id">
+                <button
+                  class="mx-3"
+                  mat-raised-button
+                  color="primary"
+                  (click)="saveChanges()"
+                >
+                  Guardar
+                </button>
+                <button
+                  mat-raised-button
+                  color="primary"
+                  (click)="cancelChanges()"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
             <figure class="img-container">
               <img
                 class="my-4 imgTask img-fluid"
                 mat-card-lg-avatar
-                src="{{ task._id | getImg: 'tasks' }}"
-                alt="{{ task.name }}"
+                [src]="
+                  (task._id == taskId && readerImg) ||
+                  (task._id | getImg: 'tasks')
+                "
+                (click)="edition && imgInput.click()"
               />
+              <input
+                class="d-none"
+                type="file"
+                (change)="uploadImg($event)"
+                #imgInput
+              />
+              <button
+                *ngIf="edition == true && taskId == task._id"
+                class="delImg"
+                mat-raised-button
+                color="warn"
+                (click)="deleteImg()"
+              >
+                X
+              </button>
             </figure>
-            <div
-              class="uploads my-4 d-flex justify-content-center"
-              *ngIf="edition == true && taskId == task._id"
-            >
-              <div>
-                <input type="file" (change)="uploadImg($event)" />
-              </div>
-              <mat-card-actions class="mb-4">
-                <button mat-raised-button color="primary" (click)="changeImg()">
-                  Change
-                </button>
-                <button mat-raised-button color="warn" (click)="changeImg()">
-                  X
-                </button>
-              </mat-card-actions>
-            </div>
             <mat-card-content>
               <p *ngIf="edition == false">{{ task.description }}</p>
               <mat-form-field *ngIf="edition == true && taskId == task._id">
-                <input type="text" class="form-control" [(ngModel)]="taskData.description" matInput required />
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="taskData.description"
+                  matInput
+                  required
+                />
               </mat-form-field>
               <div class="d-flex justify-content-end my-2">
                 <button
                   mat-mini-fab
                   color="primary"
-                  aria-label="Example icon button with a plus one icon"
+                  aria-label="edit icon"
                   *ngIf="edition == false"
                 >
-                  <mat-icon (click)="editTask(task)">edit</mat-icon>
-                </button>
-
-                <button
-                  mat-raised-button
-                  color="primary"
-                  (click)="saveChanges()"
-                  *ngIf="edition == true && taskId == task._id"
-                >
-                  Guardar
+                  <mat-icon (click)="editTask(task, taskId)">edit</mat-icon>
                 </button>
               </div>
             </mat-card-content>
@@ -253,55 +302,79 @@
                 task.name
               }}</mat-card-title>
               <mat-form-field *ngIf="edition == true && taskId == task._id">
-                <input type="text" class="form-control" [(ngModel)]="taskData.name" matInput required />
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="taskData.name"
+                  matInput
+                  required
+                />
               </mat-form-field>
             </mat-card-header>
+            <div class="d-flex justify-content-end">
+              <div class="w-50" *ngIf="edition == true && taskId == task._id">
+                <button
+                  class="mx-3"
+                  mat-raised-button
+                  color="primary"
+                  (click)="saveChanges()"
+                >
+                  Guardar
+                </button>
+                <button
+                  mat-raised-button
+                  color="primary"
+                  (click)="cancelChanges()"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
             <figure class="img-container">
               <img
                 class="my-4 imgTask img-fluid"
                 mat-card-lg-avatar
-                src="{{ task._id | getImg: 'tasks' }}"
-                alt="{{ task.name }}"
+                [src]="
+                  (task._id == taskId && readerImg) ||
+                  (task._id | getImg: 'tasks')
+                "
+                (click)="edition && imgInput.click()"
               />
+              <input
+                class="d-none"
+                type="file"
+                (change)="uploadImg($event)"
+                #imgInput
+              />
+              <button
+                *ngIf="edition == true && taskId == task._id"
+                class="delImg"
+                mat-raised-button
+                color="warn"
+                (click)="deleteImg()"
+              >
+                X
+              </button>
             </figure>
-            <div
-              class="uploads my-4 d-flex justify-content-center"
-              *ngIf="edition == true && taskId == task._id"
-            >
-              <div>
-                <input type="file" (change)="uploadImg($event)"/>
-              </div>
-              <mat-card-actions class="mb-4">
-                <button mat-raised-button color="primary" (click)="changeImg()">
-                  Change
-                </button>
-                <button mat-raised-button color="warn" (click)="changeImg()">
-                  X
-                </button>
-              </mat-card-actions>
-            </div>
             <mat-card-content>
               <p *ngIf="edition == false">{{ task.description }}</p>
               <mat-form-field *ngIf="edition == true && taskId == task._id">
-                <input type="text" class="form-control" [(ngModel)]="taskData.description" matInput required />
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="taskData.description"
+                  matInput
+                  required
+                />
               </mat-form-field>
               <div class="d-flex justify-content-end my-2">
                 <button
                   mat-mini-fab
                   color="primary"
-                  aria-label="Example icon button with a plus one icon"
+                  aria-label="edit icon"
                   *ngIf="edition == false"
                 >
-                  <mat-icon (click)="editTask(task)">edit</mat-icon>
-                </button>
-
-                <button
-                  mat-raised-button
-                  color="primary"
-                  (click)="saveChanges()"
-                  *ngIf="edition == true && taskId == task._id"
-                >
-                  Guardar
+                  <mat-icon (click)="editTask(task, taskId)">edit</mat-icon>
                 </button>
               </div>
             </mat-card-content>

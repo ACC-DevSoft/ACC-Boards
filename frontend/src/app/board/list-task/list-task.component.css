@@ -1,16 +1,17 @@
 .main-tasks {
   max-width: 90%;
 }
+
 .container-tasks {
   text-align: center;
   max-height: 100vh;
   overflow: auto;
 }
 
-
 .header-task {
   padding: 10px;
 }
+
 .container-tasks ul li {
   list-style: none;
   margin: 20px 0;
@@ -19,6 +20,13 @@
 .img-container {
   object-fit: cover;
   overflow: hidden;
+  position: relative;
+}
+
+.img-container .delImg{
+  position: absolute;
+  top: 35px;
+  right: 170px;
 }
 
 .imgTask {
